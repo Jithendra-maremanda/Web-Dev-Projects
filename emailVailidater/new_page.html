@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/
+	4.0.0/css/bootstrap.min.css">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/
+	jquery/3.3.1/jquery.min.js">
+	</script>
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/
+	popper.js/1.12.9/umd/popper.min.js">
+	</script>
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/
+	4.0.0/js/bootstrap.min.js">
+	</script>
+</head>
+
+<body><br>
+	<div class="container">
+		<div class="col-lg-8
+		m-auto d-block">
+			<form>
+				<div class="form-group">
+					<label for="user">
+						Username:
+					</label>
+					<input type="text" name="username" id="usernames" class="form-control">
+					<h5 id="usercheck" style="color: red;">
+						**Username is missing
+					</h5>
+				</div>
+				
+				<div class="form-group">
+					<label for="user">
+						Email:
+					</label>
+					<input type="email" name="email" id="email" required class="form-control">
+					<small id="emailvalid" class="form-text
+				text-muted invalid-feedback">
+						Your email must be a valid email
+					</small>
+				</div>
+
+				<div class="form-group">
+					<label for="password">
+						Password:
+					</label>
+					<input type="password" name="pass" id="password" class="form-control">
+					<small id="valid" class="form-text
+				text-muted invalid-feedback">
+						Your password must be a valid password
+					</small>
+				</div>
+				<input type="submit" id="submitbtn" value="Submit" class="btn btn-primary">
+			</form>
+		</div>
+	</div>
+
+	<script>
+$(document).ready(function () {
+// Username
+$("#usercheck").hide();
+let usernameError = true;
+$("#usernames").keyup(function () {
+	validateUsername();
+});
+
+function validateUsername() {
+    let usernameValue = $("#usernames").val();
+    if (usernameValue.length == "") {
+      $("#usercheck").show();
+      usernameError = false;
+      return false;
+    } else if (usernameValue.length < 3 || usernameValue.length > 10) {
+      $("#usercheck").show();
+      $("#usercheck").html("**length of username must be between 3 and 10");
+      usernameError = false;
+      return false;
+    } else {
+      $("#usercheck").hide();
+    }
+  }
+
+//Email
+function validateEmail() {
+    const email = document.getElementById("email");
+    email.addEventListener("blur", () => {
+	let regex = /^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
+	let s = email.value;
+	if (regex.test(s)) {
+	email.classList.remove("is-invalid");
+	emailError = true;
+	} else {
+	email.classList.add("is-invalid");
+	emailError = false;
+	}
+});
+}
+
+// Password
+function validatePassword() {
+    const password=document.getElementById('password');
+    password.addEventListener("blur", () => {
+	let regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+	let s = password.value;
+	if (regex.test(s)) {
+    password.classList.remove("is-invalid");
+	passError = true;
+	} else {
+	password.classList.add("is-invalid");
+	passError = false;
+	}
+});
+}
+
+
+// Submit button
+$("#submitbtn").click(function () {
+	validateUsername();
+	validatePassword();
+	validateEmail();
+	if (
+	usernameError == true &&
+	passError == true &&
+	emailError == true
+	) {
+	 return console.log('Succesfully loged in');
+	} else {
+	 return console.log('Succesfully not loged in');;
+	}
+})
+});
+    </script>
+</body>
+
+</html>
